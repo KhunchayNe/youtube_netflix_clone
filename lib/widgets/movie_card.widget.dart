@@ -13,38 +13,46 @@ class MovieCard extends StatelessWidget {
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {
-       if (snapshot.hasData) {
-            var data = snapshot.data?.results;
-        return Column(
-          children: [
-            Text(
-              headLineText,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: data?.length,
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+        if (snapshot.hasData) {
+          var data = snapshot.data?.results;
+          return Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      headLineText,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    child: Image.network('$imageUrl${data?[index].posterPath}'),
-                  );
-                },
-              ),
-            )
-          ],
-        );
-       } else {
-            return const SizedBox.shrink();
-          }
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: data?.length,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Image.network(
+                            '$imageUrl${data?[index].posterPath}'),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
     );
   }

@@ -10,9 +10,9 @@ class MoreScreen extends StatefulWidget {
 class _MoreScreenState extends State<MoreScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: const Text('More'),
+        child: Text('More'),
       ),
     );
   }

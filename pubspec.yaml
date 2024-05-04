@@ -9,13 +9,15 @@ environment:
   sdk: ">=3.3.3 <4.0.0"
 
 dependencies:
+  cached_network_image: ^3.3.1
+  carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.6
+  dio: ^5.4.3+1
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
   http: ^1.2.1
   lottie: ^3.1.0
-  dio: ^5.4.3+1
 
 dev_dependencies:
   flutter_lints: ^3.0.0

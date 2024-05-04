@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_netflix_clone/common/utils.dart';
 import 'package:youtube_netflix_clone/models/movie_model.dart';
+import 'package:youtube_netflix_clone/models/tv_series_model.dart';
 import 'package:youtube_netflix_clone/services/api_service.dart';
+import 'package:youtube_netflix_clone/widgets/custom_carousel.dart';
 import 'package:youtube_netflix_clone/widgets/movie_card.widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,10 +15,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<MovieModel> upcomingFuture;
+  late Future<MovieModel> nowPlayingFuture;
+  late Future<TvSeries> tvSeriesFuture;
   ApiService apiService = ApiService();
   @override
   void initState() {
     upcomingFuture = apiService.getUpcomingMovies();
+    nowPlayingFuture = apiService.getNowPlayingMovies();
+    tvSeriesFuture = apiService.getTvSeries();
     super.initState();
   }
 
@@ -49,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 27,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20.0,
           )
         ],
@@ -57,7 +63,22 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-           SizedBox(
+            FutureBuilder(
+                future: tvSeriesFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return CustomCaruel(data: snapshot.data!);
+                  }
+                  return const SizedBox.square();
+                }),
+            SizedBox(
+              height: 220,
+              child: MovieCard(
+                future: nowPlayingFuture,
+                headLineText: 'Now Playing',
+              ),
+            ),
+            SizedBox(
               height: 220,
               child: MovieCard(
                 future: upcomingFuture,
