@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_netflix_clone/common/utils.dart';
-import 'package:youtube_netflix_clone/models/upcoming_model.dart';
+import 'package:youtube_netflix_clone/models/movie_model.dart';
 
 class MovieCard extends StatelessWidget {
-  final Future<UpcomingMovie> future;
+  final Future<MovieModel> future;
   final String headLineText;
   const MovieCard(
       {super.key, required this.future, required this.headLineText});
@@ -13,7 +13,8 @@ class MovieCard extends StatelessWidget {
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {
-        var data = snapshot.data?.results;
+       if (snapshot.hasData) {
+            var data = snapshot.data?.results;
         return Column(
           children: [
             Text(
@@ -41,6 +42,9 @@ class MovieCard extends StatelessWidget {
             )
           ],
         );
+       } else {
+            return const SizedBox.shrink();
+          }
       },
     );
   }

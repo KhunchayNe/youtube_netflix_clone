@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_netflix_clone/common/utils.dart';
-import 'package:youtube_netflix_clone/models/upcoming_model.dart';
+import 'package:youtube_netflix_clone/models/movie_model.dart';
 import 'package:youtube_netflix_clone/services/api_service.dart';
 import 'package:youtube_netflix_clone/widgets/movie_card.widget.dart';
 
@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<UpcomingMovie> upcomingFuture;
+  late Future<MovieModel> upcomingFuture;
   ApiService apiService = ApiService();
   @override
   void initState() {
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kBackgroudColor,
+        backgroundColor: kBackgoundColor,
         title: Image.asset(
           'assets/logo.png',
           height: 50,
@@ -57,11 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+           SizedBox(
               height: 220,
               child: MovieCard(
-                  future: upcomingFuture, headLineText: "Upcoming Movies"),
-            )
+                future: upcomingFuture,
+                headLineText: 'Upcoming Movies',
+              ),
+            ),
           ],
         ),
       ),

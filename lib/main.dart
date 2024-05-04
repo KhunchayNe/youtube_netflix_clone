@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:youtube_netflix_clone/screens/home_screen.dart';
 import 'package:youtube_netflix_clone/screens/splash_screen.dart';
 
 void main() {
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.ptSans().fontFamily,
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
