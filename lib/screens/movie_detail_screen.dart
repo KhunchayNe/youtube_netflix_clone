@@ -122,7 +122,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           if (snapshot.hasData) {
                             final movie = snapshot.data;
 
-                            return movie!.results!.isEmpty
+                            return movie!.results.isEmpty
                                 ? const SizedBox.shrink()
                                 : Column(
                                     crossAxisAlignment:
@@ -136,7 +136,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                         height: 20,
                                       ),
                                       GridView.builder(
-                                          itemCount: movie.results?.length,
+                                          itemCount: movie.results.length,
                                           shrinkWrap: true,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
@@ -155,13 +155,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                                         builder: (context) =>
                                                             MovieDetailScreen(
                                                                 movieId: movie
-                                                                    .results![
+                                                                    .results[
                                                                         index]
                                                                     .id)));
                                               },
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                    '${imageUrl}${movie.results[index].posterPath}',
+                                                    '$imageUrl${movie.results[index].posterPath}',
                                               ),
                                             );
                                           })
