@@ -13,20 +13,25 @@ class CustomCaruel extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width,
-      height: (size.height * 0.33 < 300) ? 300 : size.height * 0.33,
+      height: (size.height * 0.35 < 300) ? 200 : size.height * 0.35,
       child: CarouselSlider.builder(
           itemCount: data.results.length,
           itemBuilder: (context, index, realIndex) {
             var url = data.results[index].backdropPath.toString();
 
             return GestureDetector(
-              child: CachedNetworkImage(
-                imageUrl: '$imageUrl$url',
+              child: Column(
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: '$imageUrl$url',
+                  ),
+                  Text(data.results[index].title)
+                ],
               ),
             );
           },
           options: CarouselOptions(
-              height: (size.height * 0.33 < 300) ? 300 : size.height * 0.33,
+              height: (size.height * 0.35 < 300) ? 300 : size.height * 0.35,
               aspectRatio: 16 / 9,
               reverse: false,
               autoPlay: true,

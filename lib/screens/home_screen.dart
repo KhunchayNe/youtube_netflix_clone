@@ -78,6 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 headLineText: 'Now Playing',
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
             SizedBox(
               height: 220,
               child: MovieCard(
