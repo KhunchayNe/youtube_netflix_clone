@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_netflix_clone/common/utils.dart';
 import 'package:youtube_netflix_clone/models/movie_detail_model.dart';
+import 'package:youtube_netflix_clone/models/movie_recommendation.dart';
 import 'package:youtube_netflix_clone/services/api_service.dart';
 
 class MovieDetailScreen extends StatefulWidget {
@@ -15,6 +17,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   ApiService apiService = ApiService();
 
   late Future<MovieDetailModel> movieDetailFuture;
+  late Future<MovieRecommendationModel> movieRecommendation;
 
   @override
   void initState() {
@@ -24,6 +27,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   fetchInitialData() {
     movieDetailFuture = apiService.getMovieDetail(widget.movieId);
+    movieRecommendation = apiService.getMovieRecommendation(widget.movieId);
     setState(() {});
   }
 
@@ -38,6 +42,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final movie = snapshot.data;
+
+                String genreText = movie!.genres.map((e) => e.name).join(', ');
+
                 return Column(
                   children: [
                     Stack(
@@ -47,7 +54,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    "$imageUrl${movie?.posterPath}"),
+                                    "$imageUrl${movie.posterPath}"),
                                 fit: BoxFit.cover),
                           ),
                           child: SafeArea(
@@ -69,9 +76,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ],
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          movie!.title,
+                          movie.title,
                           style: const TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
                         ),
@@ -81,17 +89,92 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         Row(
                           children: [
                             Text(movie.releaseDate.year.toString(),
-                                style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold))
+                                style: const TextStyle(color: Colors.grey)),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              genreText,
+                              style: const TextStyle(color: Colors.grey),
+                            )
                           ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          movie.overview,
+                          maxLines: 6,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                         )
                       ],
-                    )
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    FutureBuilder(
+                        future: movieRecommendation,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final movie = snapshot.data;
+
+                            return movie!.results!.isEmpty
+                                ? const SizedBox.shrink()
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'More like this',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      GridView.builder(
+                                          itemCount: movie.results?.length,
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  mainAxisSpacing: 15,
+                                                  crossAxisSpacing: 5,
+                                                  childAspectRatio: 1.5 / 2),
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            MovieDetailScreen(
+                                                                movieId: movie
+                                                                    .results![
+                                                                        index]
+                                                                    .id)));
+                                              },
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    '${imageUrl}${movie.results[index].posterPath}',
+                                              ),
+                                            );
+                                          })
+                                    ],
+                                  );
+                          } else {
+                            return SizedBox.fromSize();
+                          }
+                        })
                   ],
                 );
               } else {
-                return const SizedBox.shrink();
+                return const Text('Something went wrong');
               }
             }),
       ),

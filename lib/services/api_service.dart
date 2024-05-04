@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:youtube_netflix_clone/models/movie_detail_model.dart';
 import 'package:youtube_netflix_clone/models/movie_model.dart';
 import 'package:youtube_netflix_clone/models/movie_recommend_model.dart';
+import 'package:youtube_netflix_clone/models/movie_recommendation.dart';
 import 'package:youtube_netflix_clone/models/search_model.dart';
 import 'package:youtube_netflix_clone/models/tv_series_model.dart';
 
@@ -100,5 +101,28 @@ class ApiService {
       return MovieDetailModel.fromJson(jsonDecode(response.body));
     }
     throw Exception('failed to load movie details');
+  }
+
+  Future<MovieRecommendationModel> getMovieRecommendation(int movieId) async {
+    try {
+      endPoint = 'movie/$movieId/recommendations';
+      final url = '$baseUrl$endPoint';
+      Map<String, String> header = {
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NjY1ODczYzQ1ZDdlNjc3ZGVmNTUzZDI5YTI2MDkxOCIsInN1YiI6IjY2MzI0ZTgyZDE4NTcyMDEyNTMzZDFjNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eksGUyxcWYO4AfNawJ2dm33DYiwV_4DciHhWQYHgmnw',
+      };
+      // final response = await http.get(Uri.parse(url), headers: header);
+      final response = await dio.get(url, options: Options(headers: header));
+      if (response.statusCode == 200) {
+        print('Res : ${response.toString()}');
+        print(movieId);
+        log('success getMovieRecommendation');
+        return MovieRecommendationModel.fromJson(response.data);
+      }
+      throw Exception('failed to load movie details');
+    } catch (e) {
+      print(e.toString());
+      throw Exception('failed to load movie details');
+    }
   }
 }

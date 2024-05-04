@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_netflix_clone/common/utils.dart';
 import 'package:youtube_netflix_clone/models/movie_recommend_model.dart';
 import 'package:youtube_netflix_clone/models/search_model.dart';
+import 'package:youtube_netflix_clone/screens/movie_detail_screen.dart';
 import 'package:youtube_netflix_clone/services/api_service.dart';
 import 'package:youtube_netflix_clone/widgets/movie_recommend.dart';
 
@@ -87,29 +88,41 @@ class _SearchScreenState extends State<SearchScreen> {
                                     crossAxisSpacing: 5,
                                     childAspectRatio: 1.2 / 2),
                             itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  searchMovie?.results[index].backdropPath ==
-                                          null
-                                      ? Image.asset(
-                                          "assets/netflix.png",
-                                          height: 170,
-                                        )
-                                      : CachedNetworkImage(
-                                          imageUrl:
-                                              '$imageUrl${searchMovie?.results[index].backdropPath}',
-                                          height: 170,
-                                        ),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      searchMovie!.results[index].title,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(fontSize: 16.0),
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MovieDetailScreen(
+                                                movieId: searchMovie!
+                                                    .results[index].id,
+                                              )));
+                                },
+                                child: Column(
+                                  children: [
+                                    searchMovie?.results[index].backdropPath ==
+                                            null
+                                        ? Image.asset(
+                                            "assets/netflix.png",
+                                            height: 170,
+                                          )
+                                        : CachedNetworkImage(
+                                            imageUrl:
+                                                '$imageUrl${searchMovie?.results[index].backdropPath}',
+                                            height: 170,
+                                          ),
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        searchMovie!.results[index].title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(fontSize: 16.0),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             })
               ],
