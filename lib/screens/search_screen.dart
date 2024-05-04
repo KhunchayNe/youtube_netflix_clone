@@ -59,7 +59,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: const TextStyle(color: Colors.white),
                   backgroundColor: Colors.grey.withOpacity(0.3),
                   onChanged: (value) {
-                    print(value);
                     if (value.isEmpty) {
                       searchController.clearComposing();
                       setState(() {

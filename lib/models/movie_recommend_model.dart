@@ -13,19 +13,6 @@ class MovieRecommendModel {
     required this.totalResults,
   });
 
-  MovieRecommendModel copyWith({
-    int? page,
-    List<Result>? results,
-    int? totalPages,
-    int? totalResults,
-  }) =>
-      MovieRecommendModel(
-        page: page ?? this.page,
-        results: results ?? this.results,
-        totalPages: totalPages ?? this.totalPages,
-        totalResults: totalResults ?? this.totalResults,
-      );
-
   factory MovieRecommendModel.fromRawJson(String str) =>
       MovieRecommendModel.fromJson(json.decode(str));
 
@@ -80,39 +67,6 @@ class Result {
     required this.voteAverage,
     required this.voteCount,
   });
-
-  Result copyWith({
-    bool? adult,
-    String? backdropPath,
-    List<int>? genreIds,
-    int? id,
-    String? originalLanguage,
-    String? originalTitle,
-    String? overview,
-    double? popularity,
-    String? posterPath,
-    DateTime? releaseDate,
-    String? title,
-    bool? video,
-    double? voteAverage,
-    int? voteCount,
-  }) =>
-      Result(
-        adult: adult ?? this.adult,
-        backdropPath: backdropPath ?? this.backdropPath,
-        genreIds: genreIds ?? this.genreIds,
-        id: id ?? this.id,
-        originalLanguage: originalLanguage ?? this.originalLanguage,
-        originalTitle: originalTitle ?? this.originalTitle,
-        overview: overview ?? this.overview,
-        popularity: popularity ?? this.popularity,
-        posterPath: posterPath ?? this.posterPath,
-        releaseDate: releaseDate ?? this.releaseDate,
-        title: title ?? this.title,
-        video: video ?? this.video,
-        voteAverage: voteAverage ?? this.voteAverage,
-        voteCount: voteCount ?? this.voteCount,
-      );
 
   factory Result.fromRawJson(String str) => Result.fromJson(json.decode(str));
 

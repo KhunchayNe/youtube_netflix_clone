@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_netflix_clone/common/utils.dart';
 import 'package:youtube_netflix_clone/models/movie_recommend_model.dart';
+import 'package:youtube_netflix_clone/screens/movie_detail_screen.dart';
 
 class MovieRecommend extends StatelessWidget {
   final Future<MovieRecommendModel> future;
@@ -36,27 +37,38 @@ class MovieRecommend extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 150,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.network('$imageUrl${data?[index].posterPath}'),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          SizedBox(
-                            width: 260,
-                            child: Text(
-                              data![index].title,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MovieDetailScreen(
+                                      movieId: data[index].id,
+                                    )));
+                      },
+                      child: Container(
+                        height: 150,
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.network(
+                                '$imageUrl${data?[index].posterPath}'),
+                            const SizedBox(
+                              width: 20,
                             ),
-                          )
-                        ],
+                            SizedBox(
+                              width: 260,
+                              child: Text(
+                                data![index].title,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
