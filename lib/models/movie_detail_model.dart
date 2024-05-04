@@ -9,7 +9,6 @@ class MovieDetailModel {
   String homepage;
   int id;
   String imdbId;
-  List<String> originCountry;
   String originalLanguage;
   String originalTitle;
   String overview;
@@ -37,7 +36,6 @@ class MovieDetailModel {
     required this.homepage,
     required this.id,
     required this.imdbId,
-    required this.originCountry,
     required this.originalLanguage,
     required this.originalTitle,
     required this.overview,
@@ -57,63 +55,6 @@ class MovieDetailModel {
     required this.voteCount,
   });
 
-  MovieDetailModel copyWith({
-    bool? adult,
-    String? backdropPath,
-    dynamic belongsToCollection,
-    int? budget,
-    List<Genre>? genres,
-    String? homepage,
-    int? id,
-    String? imdbId,
-    List<String>? originCountry,
-    String? originalLanguage,
-    String? originalTitle,
-    String? overview,
-    double? popularity,
-    String? posterPath,
-    List<ProductionCompany>? productionCompanies,
-    List<ProductionCountry>? productionCountries,
-    DateTime? releaseDate,
-    int? revenue,
-    int? runtime,
-    List<SpokenLanguage>? spokenLanguages,
-    String? status,
-    String? tagline,
-    String? title,
-    bool? video,
-    double? voteAverage,
-    int? voteCount,
-  }) =>
-      MovieDetailModel(
-        adult: adult ?? this.adult,
-        backdropPath: backdropPath ?? this.backdropPath,
-        belongsToCollection: belongsToCollection ?? this.belongsToCollection,
-        budget: budget ?? this.budget,
-        genres: genres ?? this.genres,
-        homepage: homepage ?? this.homepage,
-        id: id ?? this.id,
-        imdbId: imdbId ?? this.imdbId,
-        originCountry: originCountry ?? this.originCountry,
-        originalLanguage: originalLanguage ?? this.originalLanguage,
-        originalTitle: originalTitle ?? this.originalTitle,
-        overview: overview ?? this.overview,
-        popularity: popularity ?? this.popularity,
-        posterPath: posterPath ?? this.posterPath,
-        productionCompanies: productionCompanies ?? this.productionCompanies,
-        productionCountries: productionCountries ?? this.productionCountries,
-        releaseDate: releaseDate ?? this.releaseDate,
-        revenue: revenue ?? this.revenue,
-        runtime: runtime ?? this.runtime,
-        spokenLanguages: spokenLanguages ?? this.spokenLanguages,
-        status: status ?? this.status,
-        tagline: tagline ?? this.tagline,
-        title: title ?? this.title,
-        video: video ?? this.video,
-        voteAverage: voteAverage ?? this.voteAverage,
-        voteCount: voteCount ?? this.voteCount,
-      );
-
   factory MovieDetailModel.fromRawJson(String str) =>
       MovieDetailModel.fromJson(json.decode(str));
 
@@ -129,7 +70,6 @@ class MovieDetailModel {
         homepage: json["homepage"],
         id: json["id"],
         imdbId: json["imdb_id"],
-        originCountry: List<String>.from(json["origin_country"].map((x) => x)),
         originalLanguage: json["original_language"],
         originalTitle: json["original_title"],
         overview: json["overview"],
@@ -163,7 +103,6 @@ class MovieDetailModel {
         "homepage": homepage,
         "id": id,
         "imdb_id": imdbId,
-        "origin_country": List<dynamic>.from(originCountry.map((x) => x)),
         "original_language": originalLanguage,
         "original_title": originalTitle,
         "overview": overview,
@@ -197,15 +136,6 @@ class Genre {
     required this.name,
   });
 
-  Genre copyWith({
-    int? id,
-    String? name,
-  }) =>
-      Genre(
-        id: id ?? this.id,
-        name: name ?? this.name,
-      );
-
   factory Genre.fromRawJson(String str) => Genre.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
@@ -223,7 +153,7 @@ class Genre {
 
 class ProductionCompany {
   int id;
-  String logoPath;
+  String? logoPath;
   String name;
   String originCountry;
 
@@ -233,19 +163,6 @@ class ProductionCompany {
     required this.name,
     required this.originCountry,
   });
-
-  ProductionCompany copyWith({
-    int? id,
-    String? logoPath,
-    String? name,
-    String? originCountry,
-  }) =>
-      ProductionCompany(
-        id: id ?? this.id,
-        logoPath: logoPath ?? this.logoPath,
-        name: name ?? this.name,
-        originCountry: originCountry ?? this.originCountry,
-      );
 
   factory ProductionCompany.fromRawJson(String str) =>
       ProductionCompany.fromJson(json.decode(str));
@@ -277,15 +194,6 @@ class ProductionCountry {
     required this.name,
   });
 
-  ProductionCountry copyWith({
-    String? iso31661,
-    String? name,
-  }) =>
-      ProductionCountry(
-        iso31661: iso31661 ?? this.iso31661,
-        name: name ?? this.name,
-      );
-
   factory ProductionCountry.fromRawJson(String str) =>
       ProductionCountry.fromJson(json.decode(str));
 
@@ -313,17 +221,6 @@ class SpokenLanguage {
     required this.iso6391,
     required this.name,
   });
-
-  SpokenLanguage copyWith({
-    String? englishName,
-    String? iso6391,
-    String? name,
-  }) =>
-      SpokenLanguage(
-        englishName: englishName ?? this.englishName,
-        iso6391: iso6391 ?? this.iso6391,
-        name: name ?? this.name,
-      );
 
   factory SpokenLanguage.fromRawJson(String str) =>
       SpokenLanguage.fromJson(json.decode(str));

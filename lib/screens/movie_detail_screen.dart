@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:youtube_netflix_clone/common/utils.dart';
 import 'package:youtube_netflix_clone/models/movie_detail_model.dart';
 import 'package:youtube_netflix_clone/services/api_service.dart';
@@ -37,13 +36,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         child: FutureBuilder(
             future: movieDetailFuture,
             builder: (context, snapshot) {
-              print(widget.movieId);
               if (snapshot.hasData) {
                 final movie = snapshot.data;
-                print('res $imageUrl${movie?.posterPath}');
                 return Column(
                   children: [
-                    Text(movie!.backdropPath),
                     Stack(
                       children: [
                         Container(
@@ -51,7 +47,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    "$imageUrl${movie.posterPath}"),
+                                    "$imageUrl${movie?.posterPath}"),
                                 fit: BoxFit.cover),
                           ),
                           child: SafeArea(
@@ -72,6 +68,26 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                       ],
                     ),
+                    Column(
+                      children: [
+                        Text(
+                          movie!.title,
+                          style: const TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Text(movie.releaseDate.year.toString(),
+                                style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        )
+                      ],
+                    )
                   ],
                 );
               } else {

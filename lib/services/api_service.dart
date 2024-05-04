@@ -95,7 +95,7 @@ class ApiService {
     };
     final response = await http.get(Uri.parse(url), headers: header);
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      // print(response.body.toString());
       log('success getMovieDetail');
       return MovieDetailModel.fromJson(jsonDecode(response.body));
     }
