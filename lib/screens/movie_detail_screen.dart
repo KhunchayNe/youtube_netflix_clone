@@ -168,13 +168,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                     ],
                                   );
                           } else {
-                            return SizedBox.fromSize();
+                            return const Text('Something went wrong');
+                            // return SizedBox.fromSize();
                           }
                         })
                   ],
                 );
               } else {
-                return const Text('Something went wrong');
+                return SizedBox.fromSize();
               }
             }),
       ),

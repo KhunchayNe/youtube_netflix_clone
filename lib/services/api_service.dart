@@ -114,14 +114,14 @@ class ApiService {
       // final response = await http.get(Uri.parse(url), headers: header);
       final response = await dio.get(url, options: Options(headers: header));
       if (response.statusCode == 200) {
-        print('Res : ${response.toString()}');
-        print(movieId);
+        // print('Res : ${response.toString()}');
+        // print(movieId);
         log('success getMovieRecommendation');
         return MovieRecommendationModel.fromJson(response.data);
       }
       throw Exception('failed to load movie details');
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       throw Exception('failed to load movie details');
     }
   }

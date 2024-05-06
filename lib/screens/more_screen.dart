@@ -49,7 +49,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   borderRadius: BorderRadius.circular(20), color: Colors.white),
               labelColor: Colors.black,
               labelStyle:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               unselectedLabelColor: Colors.white,
               tabs: [
                 Tab(

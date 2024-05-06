@@ -13,7 +13,7 @@ class CustomCaruel extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width,
-      height: (size.height * 0.35 < 300) ? 200 : size.height * 0.35,
+      height: (size.height * 0.33 < 300) ? 300 : size.height * 0.33,
       child: CarouselSlider.builder(
           itemCount: data.results.length,
           itemBuilder: (context, index, realIndex) {
@@ -31,7 +31,7 @@ class CustomCaruel extends StatelessWidget {
             );
           },
           options: CarouselOptions(
-              height: (size.height * 0.35 < 300) ? 300 : size.height * 0.35,
+              height: (size.height * 0.33 < 300) ? 300 : size.height * 0.33,
               aspectRatio: 16 / 9,
               reverse: false,
               autoPlay: true,
